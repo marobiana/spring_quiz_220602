@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+#wrap {width:1200px;}
+
+.contents {width:1200px; height:1000px;}
+
+nav {width:300px; background-color:cornflowerblue;}
+.right {width:900px; }
+
+footer {width:1200px; height:100px;}
+
+.input-label {
+    width:130px;
+    text-align: right;
+    margin-right:10px;
+}
+
+.menu-font {
+    color:white;
+    font-size:17px;
+    font-weight: bold;
+}
+
+.menu-font:hover {
+    color:white;
+    border: 2px solid white;
+}

@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +32,7 @@
 </head>
 <body>
 	<div id="wrap">
-		<div class="contents d-flex">
+		<div class="contents bg-secondary d-flex">
 			<nav>
 				<%-- 로고 영역 --%>
 				<div class="d-flex justify-content-center pt-4">
@@ -55,51 +53,71 @@
 							기후</a></li>
 				</ul>
 			</nav>
-			<section class="right">
-				<h1>과거 날씨</h1>
-				
-				<table class="table text-center">
-					<thead>
-						<tr>
-							<th>날짜</th>
-							<th>날씨</th>
-							<th>기온</th>
-							<th>강수량</th>
-							<th>미세먼지</th>
-							<th>풍속</th>
-						</tr>
-					</thead>
-					<tbody>
-					<c:forEach var="weather" items="${resultList}">
-						<tr>
-							<td><fmt:formatDate value="${weather.date}" pattern="yyyy년 MM월 dd일" /></td>
-							<td>
-								<c:choose>
-									<c:when test="${weather.weather eq '맑음'}">
-										<img src="/img/sunny.jpg" alt="맑음">
-									</c:when>
-									<c:when test="${weather.weather eq '구름조금'}">
-										<img src="/img/partlyCloudy.jpg" alt="구름조금">
-									</c:when>
-									<c:when test="${weather.weather eq '흐림'}">
-										<img src="/img/cloudy.jpg">
-									</c:when>
-									<c:when test="${weather.weather eq '비'}">
-										<img src="/img/rainy.jpg">
-									</c:when>
-									<c:otherwise>
-										${weather.weather}
-									</c:otherwise>
-								</c:choose>
-							</td>
-							<td>${weather.temperatures}℃</td>
-							<td>${weather.precipitation}mm</td>
-							<td>${weather.microDust}</td>
-							<td>${weather.windSpeed}km/h</td>
-						</tr>
-					</c:forEach>
-					</tbody>
-				</table>
+			<%-- 날씨 추가 --%>
+			<section class="right col-10 mt-3 ml-5">
+				<h3>날씨 입력</h3>
+				<form method="post" action="/lesson05/add_weather">
+					<div class="d-flex justify-content-between mt-5">
+						<div class="d-flex align-items-center">
+							<div class="input-label">날짜</div>
+							<input type="text" class="form-control" id="date" name="date">
+						</div>
+						<div class="d-flex align-items-center">
+							<div class="input-label">날씨</div>
+							<select class="form-control" name="weather">
+								<option>맑음</option>
+								<option>구름조금</option>
+								<option>흐림</option>
+								<option>비</option>
+							</select>
+						</div>
+
+						<div class="d-flex align-items-center">
+							<div class="input-label">미세먼지</div>
+							<select class="form-control" name="microDust">
+								<option>좋음</option>
+								<option>보통</option>
+								<option>나쁨</option>
+								<option>최악</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="d-flex justify-content-between mt-5">
+						<div class="d-flex align-items-center">
+							<div class="input-label">기온</div>
+							<div class="input-group">
+								<input type="text" class="form-control" name="temperatures">
+								<div class="input-group-append">
+									<span class="input-group-text">℃</span>
+								</div>
+							</div>
+						</div>
+						<div class="d-flex align-items-center">
+							<div class="input-label">강수량</div>
+							<div class="input-group">
+								<input type="text" class="form-control" name="precipitation">
+								<div class="input-group-append">
+									<span class="input-group-text">mm</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="d-flex align-items-center">
+							<div class="input-label">풍속</div>
+							<div class="input-group">
+								<input type="text" class="form-control" name="windSpeed">
+								<div class="input-group-append">
+									<span class="input-group-text">km/h</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="text-right mt-4 mb-5">
+						<input type="submit" class="btn btn-success" value="저장">
+					</div>
+				</form>
 			</section>
 		</div>
 		<footer class="d-flex align-items-center">
@@ -117,6 +135,3 @@
 	</div>
 </body>
 </html>
-
-
-
