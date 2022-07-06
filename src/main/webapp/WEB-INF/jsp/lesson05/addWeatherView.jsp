@@ -24,6 +24,8 @@
 	crossorigin="anonymous"></script>
 	
 <%-- datepicker --%>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <%-- css --%>
 <link rel="stylesheet" type="text/css" 
@@ -32,7 +34,7 @@
 </head>
 <body>
 	<div id="wrap">
-		<div class="contents bg-secondary d-flex">
+		<div class="contents d-flex">
 			<nav>
 				<%-- 로고 영역 --%>
 				<div class="d-flex justify-content-center pt-4">
@@ -56,6 +58,7 @@
 			<%-- 날씨 추가 --%>
 			<section class="right col-10 mt-3 ml-5">
 				<h3>날씨 입력</h3>
+				<%-- form, name, submit --%>
 				<form method="post" action="/lesson05/add_weather">
 					<div class="d-flex justify-content-between mt-5">
 						<div class="d-flex align-items-center">
@@ -133,5 +136,21 @@
 			</div>
 		</footer>
 	</div>
+	
+<script>
+// ready 함수: DOM tree가 모두 구성된 후 불려지는 함수
+$(document).ready(function() {
+	
+	// datepicker
+	$("#date").datepicker({
+		dateFormat: "yy-mm-dd" // 표시 포맷
+		, changeYear: true
+		, changeMonth: true
+	});
+}); 
+</script>
 </body>
 </html>
+
+
+
