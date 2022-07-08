@@ -79,6 +79,25 @@ public class FavoriteController {
 		return "lesson06/favoriteListView";
 	}
 	
+	// 삭제
+	// AJAX 요청 - @ResponseBody return Map
+	@ResponseBody
+	@PostMapping("/delete_favorite")
+	public Map<String, Object> deleteFavorite(
+			@RequestParam("id") int id) {
+		
+		// delete db by id
+		int deleteRow = favoriteBO.deleteFavoriteById(id);
+		
+		Map<String, Object> map = new HashMap<>();
+		if (deleteRow > 0) {
+			map.put("result", "success");
+		} else {
+			map.put("result", "failure");
+		}
+		
+		return map;
+	}
 }
 
 
