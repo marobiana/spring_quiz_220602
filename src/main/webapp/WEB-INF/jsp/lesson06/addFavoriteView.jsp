@@ -32,7 +32,12 @@
 
 		<div class="form-group">
 			<label for="url">URL 주소</label>
-			<input type="text" class="form-control" id="url">
+			<div class="form-inline">
+				<input type="text" class="form-control col-10" id="url">
+				<button type="button" id="checkDuplicateBtn" class="btn btn-info">중복확인</button>
+			</div>
+			<small id="duplicationText" class="text-danger d-none">중복된 url 입니다.</small>
+			<small id="availableUrlText" class="text-success d-none">저장 가능한 url 입니다.</small>
 		</div>
 		
 		<button type="button" id="addBtn" class="btn btn-success btn-block">추가</button>
@@ -40,6 +45,41 @@
 	
 <script>
 $(document).ready(function() {
+	
+	// URL 중복확인
+	$('#checkDuplicateBtn').on('click', function() {
+		let url = $('#url').val().trim();
+		if (url == '') {
+			alert("URL을 입력하세요.");
+			return;
+		}
+		
+		// 중복확인 AJAX 통신 - db 확인
+		$.ajax({
+			// request
+			type: "POST"
+			, url: "/lesson06/is_duplication_url"
+			, data: {"url":url}
+			
+			// response
+			, success: function(data) {
+				if (data.is_duplication) {
+					// 중복일 때
+					$('#duplicationText').removeClass('d-none');
+					$('#availableUrlText').addClass('d-none');
+				} else {
+					// 사용 가능
+					$('#availableUrlText').removeClass('d-none');
+					$('#duplicationText').addClass('d-none');
+				}
+			}
+			, error: function(e) {
+				alert("중복 검사에 실패했습니다.");
+			}
+		});
+		
+	});
+	
 	$('#addBtn').on('click', function(e) {
 		let name = $('#name').val().trim();
 		let url = $('#url').val().trim();
@@ -58,6 +98,14 @@ $(document).ready(function() {
 		// http 도 아니고(그리고) https도 아닐 때 => alert
 		if (url.startsWith("http") == false && url.startsWith("https") == false) {
 			alert("주소 형식이 잘못되었습니다.");
+			return;
+		}
+		
+		// URL 중복확인 체크
+		// '저장 가능한 URL입니다.' 문구가 숨겨져 있을 때 alert을 띄운다.
+		// d-none이 있을 때
+		if ($('#availableUrlText').hasClass('d-none')) {
+			alert("URL 중복확인을 다시 해주세요.");
 			return;
 		}
 		

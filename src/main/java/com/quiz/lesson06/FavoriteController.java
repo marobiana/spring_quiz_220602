@@ -28,6 +28,26 @@ public class FavoriteController {
 		return "lesson06/addFavoriteView";
 	}
 	
+	// URL 중복확인 - AJAX로 온 요청
+	@ResponseBody
+	@PostMapping("/is_duplication_url")
+	public Map<String, Boolean> isDuplicationUrl(
+			@RequestParam("url") String url) {
+		
+		// 결과를 map -> JSON string
+		Map<String, Boolean> result = new HashMap<>();
+		result.put("is_duplication", false);
+		
+		// db select -> 중복 확인
+		Favorite favorite = favoriteBO.getFavoriteByUrl(url);
+		if (favorite != null) {
+			// 중복일 때
+			result.put("is_duplication", true);
+		}
+
+		return result;
+	}
+	
 	// AJAX로 들어온 요청은 반드시 @ResponseBody가 붙어있어야 하고, String을 리턴해야 한다.
 	// 즐겨찾기 데이터 추가 - AJAX로 들어오는 요청
 	// {"name":"신보람"} => JSON String
