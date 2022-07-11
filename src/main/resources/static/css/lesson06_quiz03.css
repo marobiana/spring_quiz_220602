@@ -1,0 +1,19 @@
+@charset "UTF-8";
+header {height:100px;}
+
+.banner {height:500px;}
+
+nav {height:40px; background-color:#E3871F;}
+.nav-item .nav-link:hover {background-color:#A76417;}
+
+/* .contents {height:500px;} */
+.contents .reservation-box {width:450px;}
+.reserve {height:250px;}
+.reserve .real-time-reserved {background-color:#B1520F;}
+.reserve .confirm {background-color: #CF6317;}
+.reserve .inquiry {background-color:#B1520F;}
+.reserve-confirm {color:#fff; font-size: 25px; }
+
+footer {height:80px;}
+
+.input-form {width:230px; height:30px; margin-left:10px;}
