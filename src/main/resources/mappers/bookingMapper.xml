@@ -25,6 +25,51 @@
 		WHERE
 			`id` = #{id}
 	</delete>
+	
+	<insert id="insertBooking" parameterType="map">
+		INSERT INTO `booking`
+		(
+			`name`
+			,`headcount`
+			,`day`
+			,`date`
+			,`phoneNumber`
+			,`state`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{name}
+			,#{headcount}
+			,#{day}
+			,#{date}
+			,#{phoneNumber}
+			,'대기중'
+			,NOW()
+			,NOW()
+		)
+	</insert>
+	
+	<select id="selectBookingListByNameAndPhoneNumber" 
+	parameterType="map" resultType="com.quiz.lesson06.model.Booking">
+		SELECT
+			`id`
+			,`name`
+			,`headcount`
+			,`day`
+			,`date`
+			,`phoneNumber`
+			,`state`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`booking`
+		WHERE
+			`name` = #{name}
+			AND `phoneNumber` = #{phoneNumber}
+		ORDER BY `id` DESC
+	</select>
 </mapper>
 
 

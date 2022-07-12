@@ -30,7 +30,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- stylesheet -->
-<link rel="stylesheet" type="text/css" href="/css/lesson06/quiz03_style.css">
+<link rel="stylesheet" type="text/css" href="/css/lesson06_quiz03.css">
 </head>
 <body>
 	<div id="wrap" class="container">
@@ -80,5 +80,81 @@
 			</small>
 		</footer>
 	</div>
+	
+<script>
+$(document).ready(function() {
+	// 예약하기 버튼 클릭
+	$('#reservationBtn').on('click', function() {
+		let name = $('input[name=name]').val().trim();
+		let date = $('input[name=date]').val().trim();
+		let day = $('input[name=day]').val().trim();
+		let headcount = $('input[name=headcount]').val().trim();
+		let phoneNumber = $('input[name=phoneNumber]').val().trim();
+		
+		// validation check
+		if (name.length < 1) {
+			alert("이름을 입력하세요");
+			return;
+		}
+		
+		if (date == "") {
+			alert("날짜를 선택하세요");
+			return;
+		}
+		
+		if (day == "") {
+			alert("숙박일을 입력하세요");
+			return;
+		}
+		
+		if (isNaN(day)) {
+			alert("숙박일수는 숫자만 입력가능합니다.");
+			return;
+		}
+		
+		if (headcount == "") {
+			alert("숙박인원을 입력하세요");
+			return;
+		}
+		
+		if (isNaN(headcount)) {
+			alert("숙박인원은 숫자만 입력가능합니다.");
+			return;
+		}
+		
+		if (phoneNumber == "") {
+			alert("전화번호를 입력하세요");
+			return;
+		}
+		
+		$.ajax({
+			type:"POST"
+			, url:"/lesson06/quiz03/add_booking"
+			, data: {"name":name, "date":date, "day":day, 
+				"headcount":headcount, "phoneNumber":phoneNumber}
+			, success: function(data) {
+				// {"result":"success"}
+				if (data.result == "success") {
+					alert("예약되었습니다.");
+					location.href = "/lesson06/quiz03/booking_list_view";
+				} else {
+					alert("예약에 실패했습니다.");
+				}
+			}
+			, error: function(e) {
+				alert("통신에 실패했습니다.");
+			}
+		});
+	});
+	
+	$("input[name=date]").datepicker({
+		minDate:0    // 오늘부터 그 뒤 날짜 선택
+		, dateFormat: "yy-mm-dd" 
+	});
+});
+</script>
 </body>
 </html>
+
+
+

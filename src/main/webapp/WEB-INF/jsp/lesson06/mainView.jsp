@@ -31,7 +31,7 @@
 
 <!-- stylesheet -->
 <link rel="stylesheet" type="text/css"
-	href="/css/lesson06/quiz03_style.css">
+	href="/css/lesson06_quiz03.css">
 </head>
 
 <body>
@@ -81,8 +81,7 @@
 
 					<!-- 버튼 -->
 					<div class="text-right mt-3 mr-3">
-						<button type="button" class="btn btn-success submit-btn">조회
-							하기</button>
+						<button type="button" class="btn btn-success submit-btn">조회 하기</button>
 					</div>
 				</div>
 
@@ -109,7 +108,7 @@
 <script>
 $(document).ready(function() {
 	// banner
-	let bannerList = ["/images/banner1.jpg", "/images/banner2.jpg", "/images/banner3.jpg", "/images/banner4.jpg"];
+	let bannerList = ["/img/test06_banner1.jpg", "/img/test06_banner2.jpg", "/img/test06_banner3.jpg", "/img/test06_banner4.jpg"];
     let currentImageIndex = 0;
     setInterval(function() {
         $("#bannerImage").attr("src", bannerList[currentImageIndex]);
@@ -118,9 +117,46 @@ $(document).ready(function() {
         if(currentImageIndex == bannerList.length) {
             currentImageIndex = 0;
         }
-    }, 3000); 
+    }, 3000);  
     
     
+    // 조회하기 버튼 클릭
+    $('.submit-btn').on('click', function() {
+    	let name = $('#name').val().trim();
+    	let phoneNumber = $('#phoneNumber').val().trim();
+    	
+    	if (name == "") {
+    		alert("이름 입력하세요");
+    		return;
+    	}
+    	
+    	if (phoneNumber == "") {
+    		alert("전화번호 입력하세요");
+    		return;
+    	}
+    	
+    	if (phoneNumber.startsWith("010") == false) {
+    		alert("010으로 시작하는 번호만 입력 가능합니다.");
+    		return;
+    	}
+    	
+    	$.ajax({
+    		type:"POST"
+    		, url: "/lesson06/quiz03/get_booking"
+    		, data: {"name":name, "phoneNumber":phoneNumber}
+    		, success: function(data) {
+    			//alert(data.result);
+    			alert("이름:" + data.booking.name 
+    					+ "\n날짜:" + data.booking.date.substring(0, 10)
+    					+ "\n일수:" + data.booking.day
+    					+ "\n인원:" + data.booking.headcount
+    					+ "\n상태:" + data.booking.state);
+    		}
+    		, error:function(e) {
+    			alert("통신이 실패했습니다.");
+    		}
+    	});
+    });
 });
 </script>
 
